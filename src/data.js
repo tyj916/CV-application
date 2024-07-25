@@ -5,7 +5,7 @@ export const cvInfo = {
     phoneNumber: '0000000000',
     location: 'Anywhere',
   },
-  educationList: [
+  educationInfo: [
     {
       schoolName: 'ABC School',
       degree: 'Bachelor of Information Technology',
@@ -21,7 +21,7 @@ export const cvInfo = {
       dateEnd: '2020-03-18',
     },
   ],
-  practicalExp: [
+  practicalInfo: [
     {
       companyName: 'ABC Company',
       title: 'E-Commerce Executive',

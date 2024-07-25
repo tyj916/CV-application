@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import './App.css'
 import { cvInfo } from './data';
+import GenerateCV from './GenerateCV';
 
 function generateCV(e) {
   e.preventDefault();
@@ -48,14 +49,14 @@ function EducationInfo({schoolName, degree, fieldOfStudy, dateStart, dateEnd}) {
   )
 }
 
-function EducationList({educationList}) {
+function EducationList({educationInfo}) {
   return (
     <>
       {
-        educationList.map((education, index) => {
+        educationInfo.map((info, index) => {
           return <EducationInfo 
             key={index}
-            {...education}
+            {...info}
           />
         })
       }
@@ -63,12 +64,12 @@ function EducationList({educationList}) {
   );
 }
 
-function EducationSection({educationList}) {
+function EducationSection({educationInfo}) {
 
   return (
     <>
       <EducationList 
-        educationList={educationList}
+        educationInfo={educationInfo}
       />
     </>
   )
@@ -95,11 +96,11 @@ function PracticalInfo({companyName, title, responsibility, dateStart, dateEnd})
   )
 }
 
-function PracticalLists({practicalExp}) {
+function PracticalLists({practicalInfo}) {
   return (
     <>
       {
-        practicalExp.map((info, index) => {
+        practicalInfo.map((info, index) => {
           return (
             <PracticalInfo 
               key={index}
@@ -112,29 +113,14 @@ function PracticalLists({practicalExp}) {
   );
 }
 
-function PracticalSection({practicalExp}) {
+function PracticalSection({practicalInfo}) {
   return (
     <>
       <PracticalLists 
-        practicalExp={practicalExp}
+        practicalInfo={practicalInfo}
       />
     </>
   )
-}
-
-function GenerateCV({name, email, phoneNumber, location}) {
-  return (
-    <>
-      <section className='general-info'>
-        <h1>{name}</h1>
-        <div className="details">
-          <p className="email">{email}</p>
-          <p className="phone-number">{phoneNumber}</p>
-          <p className="location">{location}</p>
-        </div>
-      </section>
-    </>
-  );
 }
 
 function App() {
@@ -153,14 +139,14 @@ function App() {
         <fieldset className="education-exp">
           <legend>Education Experience</legend>
           <EducationSection 
-            educationList={info.educationList}
+            educationInfo={info.educationInfo}
           />
         </fieldset>
 
         <fieldset className="practical-exp">
           <legend>Practical Experience</legend>
           <PracticalSection 
-            practicalExp={info.practicalExp}
+            practicalInfo={info.practicalInfo}
           />
         </fieldset>
 
@@ -169,7 +155,7 @@ function App() {
 
       <div className="result">
         <GenerateCV 
-          {...info.generalInfo}
+          cvInfo={info}
         />
       </div>
     </main>
