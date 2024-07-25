@@ -1,0 +1,16 @@
+main.main-container {
+  display: flex;
+}
+
+.main-container form {
+  flex: 1;
+}
+
+form fieldset {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-container .result {
+  flex: 2;
+}
