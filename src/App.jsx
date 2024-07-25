@@ -1,14 +1,14 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react';
 import './App.css'
-import { educationList, generalInfo, practicalExp } from './data';
+import { cvInfo } from './data';
 
 function generateCV(e) {
   e.preventDefault();
   return false;
 }
 
-function General() {
-  const {name, email, phoneNumber} = generalInfo;
+function GeneralSection({name, email, phoneNumber}) {
 
   return (
     <>
@@ -45,7 +45,7 @@ function EducationInfo({schoolName, degree, fieldOfStudy, dateStart, dateEnd}) {
   )
 }
 
-function EducationList() {
+function EducationList({educationList}) {
   return (
     <>
       {
@@ -53,7 +53,6 @@ function EducationList() {
           return <EducationInfo 
             key={index}
             {...education}
-            onChange={()=>{}}
           />
         })
       }
@@ -61,11 +60,13 @@ function EducationList() {
   );
 }
 
-function Education() {
+function EducationSection({educationList}) {
 
   return (
     <>
-      <EducationList />
+      <EducationList 
+        educationList={educationList}
+      />
     </>
   )
 }
@@ -91,7 +92,7 @@ function PracticalInfo({companyName, title, responsibility, dateStart, dateEnd})
   )
 }
 
-function PracticalLists() {
+function PracticalLists({practicalExp}) {
   return (
     <>
       {
@@ -108,38 +109,65 @@ function PracticalLists() {
   );
 }
 
-function Practical() {
+function PracticalSection({practicalExp}) {
   return (
     <>
-      <PracticalLists />
+      <PracticalLists 
+        practicalExp={practicalExp}
+      />
     </>
   )
 }
 
+function GenerateCV() {
+  return (
+    <>
+      <section className='general-info'>
+        <h2>General Information</h2>
+        <hr />
+        <div className="container">
+          <div className="name">
+            <p>Name</p>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
 function App() {
+  const [info, setInfo] = useState(cvInfo); 
+
   return (
     <main className='main-container'>
       <form onSubmit={generateCV}>
         <fieldset className="general-info">
           <legend>General Information</legend>
-          <General />
+          <GeneralSection 
+            {...info.generalInfo}
+          />
         </fieldset>
 
         <fieldset className="education-exp">
           <legend>Education Experience</legend>
-          <Education />
+          <EducationSection 
+            educationList={info.educationList}
+          />
         </fieldset>
 
         <fieldset className="practical-exp">
           <legend>Practical Experience</legend>
-          <Practical />
+          <PracticalSection 
+            practicalExp={info.practicalExp}
+          />
         </fieldset>
 
         <button type="submit">Generate</button>
       </form>
 
       <div className="result">
-        result
+        <GenerateCV 
+        />
       </div>
     </main>
   )
