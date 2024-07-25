@@ -3,6 +3,7 @@ export const cvInfo = {
     name: 'Mr ABC',
     email: 'example@email.com',
     phoneNumber: '0000000000',
+    location: 'Anywhere',
   },
   educationList: [
     {

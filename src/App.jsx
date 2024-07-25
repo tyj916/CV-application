@@ -8,7 +8,7 @@ function generateCV(e) {
   return false;
 }
 
-function GeneralSection({name, email, phoneNumber}) {
+function GeneralSection({name, email, phoneNumber, location}) {
 
   return (
     <>
@@ -20,6 +20,9 @@ function GeneralSection({name, email, phoneNumber}) {
 
       <label htmlFor="phone-number">Phone number: </label>
       <input type="tel" id="phone-number" defaultValue={phoneNumber}/>
+
+      <label htmlFor="location">Location: </label>
+      <input type="text" id="location" defaultValue={location}/>
     </>
   )
 }
@@ -119,16 +122,15 @@ function PracticalSection({practicalExp}) {
   )
 }
 
-function GenerateCV() {
+function GenerateCV({name, email, phoneNumber, location}) {
   return (
     <>
       <section className='general-info'>
-        <h2>General Information</h2>
-        <hr />
-        <div className="container">
-          <div className="name">
-            <p>Name</p>
-          </div>
+        <h1>{name}</h1>
+        <div className="details">
+          <p className="email">{email}</p>
+          <p className="phone-number">{phoneNumber}</p>
+          <p className="location">{location}</p>
         </div>
       </section>
     </>
@@ -167,6 +169,7 @@ function App() {
 
       <div className="result">
         <GenerateCV 
+          {...info.generalInfo}
         />
       </div>
     </main>
