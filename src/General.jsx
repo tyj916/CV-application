@@ -2,18 +2,16 @@ function General() {
   return (
     <section className="general-info">
       <h2>General Information</h2>
-      <label>
-        Name:{' '}
-        <input type="text" />
-      </label>
-      <label>
-        Email:{' '}
-        <input type="email" />
-      </label>
-      <label>
-        Phone number:{' '}
-        <input type="tel" />
-      </label>
+
+      <label htmlFor="name">Name: </label>
+      <input type="text" id="name" required />
+
+      <label htmlFor="email">Email: </label>
+      <input type="email" id="email" />
+
+      <label htmlFor="phone-number">Phone number: </label>
+      <input type="tel" id="phone-number" />
+
     </section>
   )
 }
