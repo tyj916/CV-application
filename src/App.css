@@ -2,6 +2,15 @@
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+button {
+  background-color: white;
+}
+
+button:hover {
+  transition: all 150ms ease-in-out ;
+  background-color: lightgrey;
+}
+
 main.main-container {
   display: flex;
   gap: 8px;
@@ -11,10 +20,15 @@ main.main-container {
 
 .main-container form {
   flex: 1;
+  max-width: 350px;
   display: flex;
   flex-direction: column;
   gap: 8px;
   padding: 8px;
+}
+
+form label {
+  font-weight: bold;
 }
 
 form input {
@@ -40,7 +54,10 @@ form .info-list {
 form .info-form {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
+  background-color: #eee;
+  padding: 12px;
+  border-radius: 8px;
 }
 
 .result {
@@ -68,4 +85,23 @@ form .info-form {
   width: 1rem;
   vertical-align: middle;
   margin-right: 0.2rem;
+}
+
+.result .cv .info-list {
+  padding-left: 0;
+}
+
+.result .cv .info-list .info {
+  display: flex;
+  list-style-type: none;
+}
+
+.result .cv .info-list .info .timeframe {
+  flex: 1;
+  max-width: 180px;
+  line-height: 1.6rem;
+}
+
+.result .cv .info-list .info .details {
+  flex: 1;
 }

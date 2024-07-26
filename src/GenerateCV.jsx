@@ -27,21 +27,46 @@ function GenerateGeneralInfo({name, email, phoneNumber, location}) {
   );
 }
 
+function convertMonth(value) {
+  const month = +value;
+
+  return (
+    month === 1 ? 'Jan' :
+    month === 2 ? 'Feb' :
+    month === 3 ? 'Mar' :
+    month === 4 ? 'Apr' :
+    month === 5 ? 'May' :
+    month === 6 ? 'Jun' :
+    month === 7 ? 'Jul' :
+    month === 8 ? 'Aug' :
+    month === 9 ? 'Sep' :
+    month === 10 ? 'Oct' :
+    month === 11 ? 'Nov' : 
+    month === 12 ? 'Dec' : ''
+  );
+}
+
+function getTimeframe(dateStart, dateEnd) {
+  return (
+    (dateStart).slice(0, 4) + ' ' + convertMonth((dateStart).slice(5, 7)) + ' ~ ' + (dateEnd ? ((dateEnd).slice(0, 4) + ' ' + convertMonth((dateStart).slice(5, 7))) : 'now')
+  );
+}
+
 function GenerateEducationInfo({educationInfos}) {
   return (
     <section className='education-info'>
       <h2>Education Experience</h2>
       <hr />
-      <ul className="education-list">
+      <ul className="education-list info-list">
         {
-          educationInfos.map((educationInfo, index) => {
+          educationInfos.map((info, index) => {
             return (
-              <li key={index}>
-                <p className="timeframe">{(educationInfo.dateStart).slice(0, 7)} ~ {(educationInfo.dateEnd).slice(0, 7)}</p>
+              <li key={index} className="info">
+                <p className="timeframe">{getTimeframe(info.dateStart, info.dateEnd)}</p>
                 <div className="details">
-                  <h3>{educationInfo.degree}</h3>
-                  <p className="school-name"><i>{educationInfo.schoolName}</i></p>
-                  <p className="field-of-study">{educationInfo.fieldOfStudy}</p>
+                  <h3>{info.degree}</h3>
+                  <p className="school-name"><i>{info.schoolName}</i></p>
+                  <p className="field-of-study">{info.fieldOfStudy}</p>
                 </div>
               </li>
             );
@@ -57,12 +82,12 @@ function GeneratePracticalInfo({practicalInfos}) {
     <section className='practical-info'>
       <h2>Practical Experience</h2>
       <hr />
-      <ul className="practical-list">
+      <ul className="practical-list info-list">
         {
           practicalInfos.map((info, index) => {
             return (
-              <li key={index}>
-                <p className="timeframe">{(info.dateStart).slice(0, 7)} ~ {(info.dateEnd).slice(0, 7)}</p>
+              <li key={index} className="info">
+                <p className="timeframe">{getTimeframe(info.dateStart, info.dateEnd)}</p>
                 <div className="details">
                   <h3>{info.positionTitle}</h3>
                   <p className="company-name"><i>{info.companyName}</i></p>
