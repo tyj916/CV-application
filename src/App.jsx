@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
-import './App.css'
+import './styles/App.css'
+import './styles/GenerateCV.css'
 import { cvInfo } from './data';
 import GeneralFormSection from './components/GeneralFormSection';
 import EducationFormSection from './components/EducationFormSection';
