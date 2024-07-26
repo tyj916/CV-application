@@ -14,7 +14,7 @@ function GeneralFormSection({generalInfo, onChange}) {
   const {name, email, phoneNumber, location} = generalInfo;
 
   return (
-    <>
+    <div className='general-info info-form'>
       <label htmlFor='name'>Name: </label>
       <input 
         type="text" 
@@ -53,15 +53,15 @@ function GeneralFormSection({generalInfo, onChange}) {
         onChange={onChange}
         data-type='location'
       />
-    </>
+    </div>
   )
 }
 
-function EducationForm({educationInfo, onInfoChange}) {
+function EducationForm({educationInfo, onInfoChange, removeInfo}) {
   const {id, schoolName, degree, fieldOfStudy, dateStart, dateEnd} = educationInfo;
 
   return (
-    <div className='education-form'>
+    <div className='education-form info-form'>
       <label htmlFor={"school-name-" + id}>School name: </label>
       <input 
         type="text" 
@@ -112,21 +112,28 @@ function EducationForm({educationInfo, onInfoChange}) {
         data-key={id}
         data-type='dateEnd'
       />
+
+      <button 
+        type='button' 
+        onClick={removeInfo}
+        data-key={id}
+      >Remove</button>
     </div>
   )
 }
 
-function EducationFormSection({educationInfos, onInfoChange, addNewInfo}) {
+function EducationFormSection({educationInfos, onInfoChange, addNewInfo, removeInfo}) {
   return (
     <>
       <button type='button' onClick={addNewInfo}>Add New</button>
-      <div className='education-list'>
+      <div className='education-list info-list'>
         {
           educationInfos.map((educationInfo) => {
             return <EducationForm 
               key={educationInfo.id}
               educationInfo={educationInfo}
               onInfoChange={onInfoChange}
+              removeInfo={removeInfo}
             />
           })
         }
@@ -136,11 +143,11 @@ function EducationFormSection({educationInfos, onInfoChange, addNewInfo}) {
   )
 }
 
-function PracticalForm({practicalInfo, onInfoChange}) {
+function PracticalForm({practicalInfo, onInfoChange, removeInfo}) {
   const {id, companyName, positionTitle, responsibility, dateStart, dateEnd} = practicalInfo;
   
   return (
-    <div className='practical-form'>
+    <div className='practical-form info-form'>
       <label htmlFor={"company-name-" + id}>Company name: </label>
       <input 
         type="text" 
@@ -190,15 +197,21 @@ function PracticalForm({practicalInfo, onInfoChange}) {
         data-key={id}
         data-type='dateEnd'
       />
+
+      <button 
+        type='button' 
+        onClick={removeInfo}
+        data-key={id}
+      >Remove</button>
     </div>
   )
 }
 
-function PracticalFormSection({practicalInfos, onInfoChange, addNewInfo}) {
+function PracticalFormSection({practicalInfos, onInfoChange, addNewInfo, removeInfo}) {
   return (
     <>
       <button type='button' onClick={addNewInfo}>Add New</button>
-      <div className='practical-list'>
+      <div className='practical-list info-list'>
         {
           practicalInfos.map((practicalInfo) => {
             return (
@@ -206,13 +219,13 @@ function PracticalFormSection({practicalInfos, onInfoChange, addNewInfo}) {
                 key={practicalInfo.id}
                 practicalInfo={practicalInfo}
                 onInfoChange={onInfoChange}
+                removeInfo={removeInfo}
               />
             )
           })
         }
       </div>
     </>
-    
   )
 }
 
@@ -245,6 +258,12 @@ function App() {
     }, ...educationInfos]);
   }
 
+  function removeEducationInfo(e) {
+    setEducationInfos(educationInfos.filter(info => {
+      return info.id !== e.target.dataset.key;
+    }));
+  }
+
   function handlePracticalInfosChange(e) {
     setPracticalInfos(practicalInfos.map(info => {
       if (info.id === e.target.dataset.key) {
@@ -265,6 +284,12 @@ function App() {
     }, ...practicalInfos]);
   }
 
+  function removePracticalInfo(e) {
+    setPracticalInfos(practicalInfos.filter(info => {
+      return info.id !== e.target.dataset.key;
+    }));
+  }
+
   return (
     <main className='main-container'>
       <form onSubmit={generateCV}>
@@ -282,6 +307,7 @@ function App() {
             educationInfos={educationInfos}
             onInfoChange={handleEducationInfosChange}
             addNewInfo={addEducationInfo}
+            removeInfo={removeEducationInfo}
           />
         </fieldset>
 
@@ -291,6 +317,7 @@ function App() {
             practicalInfos={practicalInfos}
             onInfoChange={handlePracticalInfosChange}
             addNewInfo={addPracticalInfo}
+            removeInfo={removePracticalInfo}
           />
         </fieldset>
 
