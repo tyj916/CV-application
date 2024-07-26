@@ -3,6 +3,7 @@ import { useState } from 'react';
 import './App.css'
 import { cvInfo } from './data';
 import GenerateCV from './GenerateCV';
+import { v4 as uuidv4 } from 'uuid';
 
 function generateCV(e) {
   e.preventDefault();
@@ -113,20 +114,23 @@ function EducationForm({educationInfo, onInfoChange}) {
   )
 }
 
-function EducationFormSection({educationInfos, onInfoChange}) {
-
+function EducationFormSection({educationInfos, onInfoChange, addNewInfo}) {
   return (
-    <div className='education-list'>
-      {
-        educationInfos.map((educationInfo) => {
-          return <EducationForm 
-            key={educationInfo.id}
-            educationInfo={educationInfo}
-            onInfoChange={onInfoChange}
-          />
-        })
-      }
-    </div>
+    <>
+      <button type='button' onClick={addNewInfo}>Add New</button>
+      <div className='education-list'>
+        {
+          educationInfos.map((educationInfo) => {
+            return <EducationForm 
+              key={educationInfo.id}
+              educationInfo={educationInfo}
+              onInfoChange={onInfoChange}
+            />
+          })
+        }
+      </div>
+    </>
+    
   )
 }
 
@@ -187,6 +191,17 @@ function App() {
     }));
   }
 
+  function addEducationInfo() {
+    setEducationInfos([{
+      id: uuidv4(),
+      schoolName: '',
+      degree: '',
+      fieldOfStudy: '',
+      dateStart: '',
+      dateEnd: '',
+    }, ...educationInfos]);
+  }
+
   return (
     <main className='main-container'>
       <form onSubmit={generateCV}>
@@ -203,6 +218,7 @@ function App() {
           <EducationFormSection 
             educationInfos={educationInfos}
             onInfoChange={handleEducationInfosChange}
+            addNewInfo={addEducationInfo}
           />
         </fieldset>
 
