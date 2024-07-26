@@ -320,8 +320,6 @@ function App() {
             removeInfo={removePracticalInfo}
           />
         </fieldset>
-
-        <button type="submit" >Generate</button>
       </form>
 
       <div className="result">
