@@ -15,10 +15,10 @@ export const cvInfo = {
     },
     {
       schoolName: 'DEF School',
-      degree: 'Bachelor of Information Technology',
-      fieldOfStudy: 'Cyber Security and Forensics and Computer Science',
-      dateStart: '2018-07-01',
-      dateEnd: '2020-03-18',
+      degree: 'Bachelor of Unemployed',
+      fieldOfStudy: 'Eat Sleep Play Repeat',
+      dateStart: '2023-02-01',
+      dateEnd: '',
     },
   ],
   practicalInfo: [
