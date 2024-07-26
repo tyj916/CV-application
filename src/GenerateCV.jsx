@@ -37,19 +37,19 @@ function GenerateEducationInfo({educationInfos}) {
   );
 }
 
-function GeneratePracticalInfo({practicalInfo}) {
+function GeneratePracticalInfo({practicalInfos}) {
   return (
     <section className='practical-info'>
       <h2>Practical Experience</h2>
       <hr />
       <ul className="practical-list">
         {
-          practicalInfo.map((info, index) => {
+          practicalInfos.map((info, index) => {
             return (
               <li key={index}>
                 <p className="timeframe">{(info.dateStart).slice(0, 7)} ~ {(info.dateEnd).slice(0, 7)}</p>
                 <div className="details">
-                  <h3>{info.title}</h3>
+                  <h3>{info.positionTitle}</h3>
                   <p className="company-name"><i>{info.companyName}</i></p>
                   <p className="responsibility">{info.responsibility}</p>
                 </div>
@@ -74,7 +74,7 @@ export default function GenerateCV({cvInfo}) {
       />
 
       <GeneratePracticalInfo 
-        practicalInfo={cvInfo.practicalInfo}
+        practicalInfos={cvInfo.practicalInfos}
       />
     </>
   );

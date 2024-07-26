@@ -20,6 +20,7 @@ function GeneralFormSection({generalInfo, onChange}) {
         type="text" 
         id="name"
         required 
+        autoComplete='true'
         value={name} 
         onChange={onChange}
         data-type='name'
@@ -30,6 +31,7 @@ function GeneralFormSection({generalInfo, onChange}) {
         type="email" 
         id="email" 
         value={email}
+        autoComplete='true'
         onChange={onChange}
         data-type='email'
       />
@@ -134,36 +136,74 @@ function EducationFormSection({educationInfos, onInfoChange, addNewInfo}) {
   )
 }
 
-function PracticalForm({companyName, title, responsibility, dateStart, dateEnd}) {
+function PracticalForm({practicalInfo, onInfoChange}) {
+  const {id, companyName, positionTitle, responsibility, dateStart, dateEnd} = practicalInfo;
+  
   return (
     <div className='practical-form'>
-      <label htmlFor="company-name">Company name: </label>
-      <input type="text" id="company-name" required value={companyName}/>
+      <label htmlFor={"company-name-" + id}>Company name: </label>
+      <input 
+        type="text" 
+        id={"company-name-" + id} 
+        required 
+        value={companyName}
+        onChange={onInfoChange}
+        data-key={id}
+        data-type='companyName'
+      />
 
-      <label htmlFor="position-title">Position title: </label>
-      <input type="text" id="position-title" value={title} />
+      <label htmlFor={"position-title-" + id}>Position title: </label>
+      <input 
+        type="text" 
+        id={"position-title-" + id} 
+        value={positionTitle} 
+        onChange={onInfoChange}
+        data-key={id}
+        data-type='positionTitle'  
+      />
 
-      <label htmlFor="main-responsibilities">Main responsibilities: </label>
-      <textarea name="main-responsibilities" id="main-responsibilities" value={responsibility}></textarea>
+      <label htmlFor={"responsibility-" + id}>Main responsibilities: </label>
+      <textarea 
+        id={"responsibility-" + id} 
+        value={responsibility}
+        onChange={onInfoChange}
+        data-key={id}
+        data-type='responsibility'  
+      ></textarea>
 
-      <label htmlFor="date-start">Date start:</label>
-      <input type="date" id="date-start" value={dateStart} />
+      <label htmlFor={"date-start-" + id}>Date start:</label>
+      <input 
+        type="date" 
+        id={"date-start-" + id} 
+        value={dateStart} 
+        onChange={onInfoChange}
+        data-key={id}
+        data-type='dateStart'  
+      />
 
-      <label htmlFor="date-end">Date end:</label>
-      <input type="date" id="date-end" value={dateEnd} />
+      <label htmlFor={"date-end-" + id}>Date end:</label>
+      <input 
+        type="date" 
+        id={"date-end-" + id} 
+        value={dateEnd} 
+        onChange={onInfoChange}
+        data-key={id}
+        data-type='dateEnd'
+      />
     </div>
   )
 }
 
-function PracticalFormSection({practicalInfo}) {
+function PracticalFormSection({practicalInfos, onInfoChange}) {
   return (
     <div className='practical-list'>
       {
-        practicalInfo.map((info) => {
+        practicalInfos.map((practicalInfo) => {
           return (
             <PracticalForm 
-              key={info.id}
-              {...info}
+              key={practicalInfo.id}
+              practicalInfo={practicalInfo}
+              onInfoChange={onInfoChange}
             />
           )
         })
@@ -173,10 +213,9 @@ function PracticalFormSection({practicalInfo}) {
 }
 
 function App() {
-  // const [info, setInfo] = useState(cvInfo);
   const [generalInfo, setGeneralInfo] = useState(cvInfo.generalInfo);
   const [educationInfos, setEducationInfos] = useState(cvInfo.educationInfos);
-  const [practicalInfo, setPracticalInfo] = useState(cvInfo.practicalInfo);
+  const [practicalInfos, setPracticalInfos] = useState(cvInfo.practicalInfos);
 
   function handleGeneralInfoChange(e) {
     setGeneralInfo({...generalInfo, [e.target.dataset.type]: e.target.value});
@@ -202,6 +241,15 @@ function App() {
     }, ...educationInfos]);
   }
 
+  function handlePracticalInfosChange(e) {
+    setPracticalInfos(practicalInfos.map(info => {
+      if (info.id === e.target.dataset.key) {
+        info[e.target.dataset.type] = e.target.value;
+      }
+      return info;
+    }));
+  }
+
   return (
     <main className='main-container'>
       <form onSubmit={generateCV}>
@@ -225,7 +273,8 @@ function App() {
         <fieldset className="practical-exp">
           <legend>Practical Experience</legend>
           <PracticalFormSection 
-            practicalInfo={practicalInfo}
+            practicalInfos={practicalInfos}
+            onInfoChange={handlePracticalInfosChange}
           />
         </fieldset>
 
@@ -234,7 +283,7 @@ function App() {
 
       <div className="result">
         <GenerateCV 
-          cvInfo={{generalInfo, educationInfos, practicalInfo}}
+          cvInfo={{generalInfo, educationInfos, practicalInfos}}
         />
       </div>
     </main>
