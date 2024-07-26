@@ -194,21 +194,25 @@ function PracticalForm({practicalInfo, onInfoChange}) {
   )
 }
 
-function PracticalFormSection({practicalInfos, onInfoChange}) {
+function PracticalFormSection({practicalInfos, onInfoChange, addNewInfo}) {
   return (
-    <div className='practical-list'>
-      {
-        practicalInfos.map((practicalInfo) => {
-          return (
-            <PracticalForm 
-              key={practicalInfo.id}
-              practicalInfo={practicalInfo}
-              onInfoChange={onInfoChange}
-            />
-          )
-        })
-      }
-    </div>
+    <>
+      <button type='button' onClick={addNewInfo}>Add New</button>
+      <div className='practical-list'>
+        {
+          practicalInfos.map((practicalInfo) => {
+            return (
+              <PracticalForm 
+                key={practicalInfo.id}
+                practicalInfo={practicalInfo}
+                onInfoChange={onInfoChange}
+              />
+            )
+          })
+        }
+      </div>
+    </>
+    
   )
 }
 
@@ -250,6 +254,17 @@ function App() {
     }));
   }
 
+  function addPracticalInfo() {
+    setPracticalInfos([{
+      id: uuidv4(),
+      companyName: '',
+      positionTitle: '',
+      responsibility: '',
+      dateStart: '',
+      dateEnd: '',
+    }, ...practicalInfos]);
+  }
+
   return (
     <main className='main-container'>
       <form onSubmit={generateCV}>
@@ -275,6 +290,7 @@ function App() {
           <PracticalFormSection 
             practicalInfos={practicalInfos}
             onInfoChange={handlePracticalInfosChange}
+            addNewInfo={addPracticalInfo}
           />
         </fieldset>
 
