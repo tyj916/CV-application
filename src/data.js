@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export const cvInfo = {
   generalInfo: {
     name: 'Mr ABC',
@@ -5,8 +7,9 @@ export const cvInfo = {
     phoneNumber: '0000000000',
     location: 'Anywhere',
   },
-  educationInfo: [
+  educationInfos: [
     {
+      id: uuidv4(),
       schoolName: 'ABC School',
       degree: 'Bachelor of Information Technology',
       fieldOfStudy: 'Cyber Security and Forensics and Computer Science',
@@ -14,6 +17,7 @@ export const cvInfo = {
       dateEnd: '2020-03-18',
     },
     {
+      id: uuidv4(),
       schoolName: 'DEF School',
       degree: 'Bachelor of Unemployed',
       fieldOfStudy: 'Eat Sleep Play Repeat',
@@ -23,6 +27,7 @@ export const cvInfo = {
   ],
   practicalInfo: [
     {
+      id: uuidv4(),
       companyName: 'ABC Company',
       title: 'E-Commerce Executive',
       responsibility: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus pariatur, fugiat quo dolorem maiores minima assumenda delectus consequatur consectetur placeat necessitatibus repudiandae dolores accusamus saepe eos aliquid, exercitationem incidunt expedita.',
@@ -30,6 +35,7 @@ export const cvInfo = {
       dateEnd: '2023-01-31',
     },
     {
+      id: uuidv4(),
       companyName: 'ABC Company',
       title: 'Web Developer',
       responsibility: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus pariatur, fugiat quo dolorem maiores minima assumenda delectus consequatur consectetur placeat necessitatibus repudiandae dolores accusamus saepe eos aliquid, exercitationem incidunt expedita.',

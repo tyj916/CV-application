@@ -21,6 +21,7 @@ function GeneralFormSection({generalInfo, onChange}) {
         required 
         value={name} 
         onChange={onChange}
+        data-type='name'
       />
 
       <label htmlFor="email">Email: </label>
@@ -29,14 +30,16 @@ function GeneralFormSection({generalInfo, onChange}) {
         id="email" 
         value={email}
         onChange={onChange}
+        data-type='email'
       />
 
-      <label htmlFor="phoneNumber">Phone number: </label>
+      <label htmlFor="phone-number">Phone number: </label>
       <input 
         type="tel" 
-        id="phoneNumber" 
+        id="phone-number" 
         value={phoneNumber}
         onChange={onChange}
+        data-type='phoneNumber'
       />
 
       <label htmlFor="location">Location: </label>
@@ -45,41 +48,81 @@ function GeneralFormSection({generalInfo, onChange}) {
         id="location" 
         value={location}
         onChange={onChange}
+        data-type='location'
       />
     </>
   )
 }
 
-function EducationForm({schoolName, degree, fieldOfStudy, dateStart, dateEnd}) {
+function EducationForm({educationInfo, onInfoChange}) {
+  const {id, schoolName, degree, fieldOfStudy, dateStart, dateEnd} = educationInfo;
+
   return (
     <div className='education-form'>
-      <label htmlFor="school-name">School name: </label>
-      <input type="text" id="school-name" required value={schoolName} />
+      <label htmlFor={"school-name-" + id}>School name: </label>
+      <input 
+        type="text" 
+        id={"school-name-" + id}
+        required 
+        value={schoolName} 
+        onChange={onInfoChange}
+        data-key={id}
+        data-type='schoolName'
+      />
 
-      <label htmlFor="degree">Degree: </label>
-      <input type="text" id="degree" value={degree} />
+      <label htmlFor={"degree-" + id}>Degree: </label>
+      <input 
+        type="text" 
+        id={"degree-" + id} 
+        value={degree} 
+        onChange={onInfoChange}
+        data-key={id}
+        data-type='degree'
+      />
 
-      <label htmlFor="field-of-study">Field of study: </label>
-      <input type="text" id="field-of-study" value={fieldOfStudy} />
+      <label htmlFor={"field-of-study-" + id}>Field of study: </label>
+      <input 
+        type="text" 
+        id={"field-of-study-" + id} 
+        value={fieldOfStudy} 
+        onChange={onInfoChange}
+        data-key={id}
+        data-type='fieldOfStudy'
+      />
 
-      <label htmlFor="date-start">Date start:</label>
-      <input type="date" id="date-start" value={dateStart} />
+      <label htmlFor={"date-start-" + id}>Date start:</label>
+      <input 
+        type="date" 
+        id={"date-start-" + id} 
+        value={dateStart} 
+        onChange={onInfoChange}
+        data-key={id}
+        data-type='dateStart'
+      />
 
-      <label htmlFor="date-end">Date end:</label>
-      <input type="date" id="date-end" value={dateEnd} />
+      <label htmlFor={"date-end-" + id}>Date end:</label>
+      <input 
+        type="date" 
+        id={"date-end-" + id} 
+        value={dateEnd} 
+        onChange={onInfoChange}
+        data-key={id}
+        data-type='dateEnd'
+      />
     </div>
   )
 }
 
-function EducationFormSection({educationInfo}) {
+function EducationFormSection({educationInfos, onInfoChange}) {
 
   return (
     <div className='education-list'>
       {
-        educationInfo.map((info, index) => {
+        educationInfos.map((educationInfo) => {
           return <EducationForm 
-            key={index}
-            {...info}
+            key={educationInfo.id}
+            educationInfo={educationInfo}
+            onInfoChange={onInfoChange}
           />
         })
       }
@@ -112,10 +155,10 @@ function PracticalFormSection({practicalInfo}) {
   return (
     <div className='practical-list'>
       {
-        practicalInfo.map((info, index) => {
+        practicalInfo.map((info) => {
           return (
             <PracticalForm 
-              key={index}
+              key={info.id}
               {...info}
             />
           )
@@ -128,11 +171,20 @@ function PracticalFormSection({practicalInfo}) {
 function App() {
   // const [info, setInfo] = useState(cvInfo);
   const [generalInfo, setGeneralInfo] = useState(cvInfo.generalInfo);
-  const [educationInfo, setEducationInfo] = useState(cvInfo.educationInfo);
+  const [educationInfos, setEducationInfos] = useState(cvInfo.educationInfos);
   const [practicalInfo, setPracticalInfo] = useState(cvInfo.practicalInfo);
 
-  function handleChange(e) {
-    setGeneralInfo({...generalInfo, [e.target.id]: e.target.value});
+  function handleGeneralInfoChange(e) {
+    setGeneralInfo({...generalInfo, [e.target.dataset.type]: e.target.value});
+  }
+
+  function handleEducationInfosChange(e) {
+    setEducationInfos(educationInfos.map(info => {
+      if (info.id === e.target.dataset.key) {
+        info[e.target.dataset.type] = e.target.value;
+      }
+      return info;
+    }));
   }
 
   return (
@@ -142,14 +194,15 @@ function App() {
           <legend>General Information</legend>
           <GeneralFormSection 
             generalInfo={generalInfo}
-            onChange={handleChange}
+            onChange={handleGeneralInfoChange}
           />
         </fieldset>
 
         <fieldset className="education-exp">
           <legend>Education Experience</legend>
           <EducationFormSection 
-            educationInfo={educationInfo}
+            educationInfos={educationInfos}
+            onInfoChange={handleEducationInfosChange}
           />
         </fieldset>
 
@@ -165,7 +218,7 @@ function App() {
 
       <div className="result">
         <GenerateCV 
-          cvInfo={{generalInfo, educationInfo, practicalInfo}}
+          cvInfo={{generalInfo, educationInfos, practicalInfo}}
         />
       </div>
     </main>

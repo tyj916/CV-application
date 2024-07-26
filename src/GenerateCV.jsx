@@ -12,21 +12,21 @@ function GenerateGeneralInfo({name, email, phoneNumber, location}) {
   );
 }
 
-function GenerateEducationInfo({educationInfo}) {
+function GenerateEducationInfo({educationInfos}) {
   return (
     <section className='education-info'>
       <h2>Education Experience</h2>
       <hr />
       <ul className="education-list">
         {
-          educationInfo.map((info, index) => {
+          educationInfos.map((educationInfo, index) => {
             return (
               <li key={index}>
-                <p className="timeframe">{(info.dateStart).slice(0, 7)} ~ {(info.dateEnd).slice(0, 7)}</p>
+                <p className="timeframe">{(educationInfo.dateStart).slice(0, 7)} ~ {(educationInfo.dateEnd).slice(0, 7)}</p>
                 <div className="details">
-                  <h3>{info.degree}</h3>
-                  <p className="school-name"><i>{info.schoolName}</i></p>
-                  <p className="field-of-study">{info.fieldOfStudy}</p>
+                  <h3>{educationInfo.degree}</h3>
+                  <p className="school-name"><i>{educationInfo.schoolName}</i></p>
+                  <p className="field-of-study">{educationInfo.fieldOfStudy}</p>
                 </div>
               </li>
             );
@@ -70,7 +70,7 @@ export default function GenerateCV({cvInfo}) {
       />
 
       <GenerateEducationInfo 
-        educationInfo={cvInfo.educationInfo}
+        educationInfos={cvInfo.educationInfos}
       />
 
       <GeneratePracticalInfo 
